@@ -1,7 +1,5 @@
 package com.edu.reactiveprogramming.model;
 
-import java.time.LocalDate;
-
 import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +18,6 @@ public class Sale {
 	private Integer car;
 	private Integer cc;
 	private String client;
-	private LocalDate date;
+	private String date;
 
 }

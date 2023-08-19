@@ -26,7 +26,7 @@ public class InventoryService implements AccionesInventory {
 	
 	public Mono<Inventory> save(Inventory inventory) {
 		return carService.findById(inventory.getCar())
-				.switchIfEmpty(Mono.error(new Throwable(ERROR_CAR_NOT_FOUND)))
+				.switchIfEmpty(Mono.error(new Exception(ERROR_CAR_NOT_FOUND)))
 				.doOnSuccess(r -> log.log(Level.INFO, r.toString()))
 				.flatMap(car -> inventoryRepository.save(inventory));
 	}

@@ -1,5 +1,6 @@
 package com.edu.reactiveprogramming.service;
 
+import java.time.LocalDate;
 import java.util.logging.Level;
 
 import org.springframework.stereotype.Service;
@@ -25,11 +26,12 @@ public class SaleService implements AccionesSale {
 	
 	public Mono<Sale> save(Sale sale) {
 		return inventoryService.findByCar(sale.getCar())
-		.switchIfEmpty(Mono.error(new Throwable(ERROR_INVENTARY)))
+		.switchIfEmpty(Mono.error(new Exception(ERROR_INVENTARY)))
 		.flatMap(inv -> {
 			if (inv.getInventory() == 0) {
-				return Mono.error(new Throwable(ERROR_INVENTARY));
+				return Mono.error(new Exception(ERROR_INVENTARY));
 			}
+			sale.setDate(LocalDate.now().toString());
 			return salesRepository.save(sale)
 					.doOnSuccess(s -> log.log(Level.INFO, s.toString()))
 					.flatMap(respSale -> {
